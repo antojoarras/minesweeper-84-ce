@@ -30,5 +30,4 @@ jobs:
       with:
         name: ti84-build
         path: |
-          src/**/*.8*
-          src/**/*.bin
+          "*.8xp"
