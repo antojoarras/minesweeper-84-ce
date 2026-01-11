@@ -29,5 +29,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: ti84-build
-        path: |
-          "*.8xp"
+        path: "**/*.8xp"
