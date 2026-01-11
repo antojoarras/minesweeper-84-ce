@@ -1,0 +1,35 @@
+name: Build TI-84 CE Program
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v4
+
+    - name: Download CEdev v14.1
+      run: |
+        wget https://github.com/CE-Programming/toolchain/releases/download/v14.1/CEdev-Linux.tar.gz
+        mkdir cedev
+        tar xzf CEdev-Linux.tar.gz -C cedev --strip-components=1
+
+    - name: Add CEdev to PATH
+      run: echo "$GITHUB_WORKSPACE/cedev/bin" >> $GITHUB_PATH
+
+    - name: Build project
+      run: |
+        cd src
+        make
+
+    - name: Upload calculator files
+      uses: actions/upload-artifact@v4
+      with:
+        name: ti84-build
+        path: |
+          src/**/*.8*
+          src/**/*.bin
